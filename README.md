@@ -14,3 +14,14 @@ kubectl apply -f a.obj
 
 go run t1.go
 ```
+
+
+
+
+
+during go.mod creation I had to experiment with versions:
+```
+go get k8s.io/client-go@v11.0.0
+go get k8s.io/api@kubernetes-1.14.0
+go get k8s.io/apimachinery@kubernetes-1.14.0 
+```
