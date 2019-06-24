@@ -1,8 +1,8 @@
 package main
 
 import (
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/client-go/kubernetes"
+  "k8s.io/apimachinery/pkg/fields"
+  "k8s.io/client-go/kubernetes"
   "fmt"
   "k8s.io/client-go/tools/clientcmd"
   metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -13,21 +13,21 @@ import (
 
 func main() {
   config, err := clientcmd.BuildConfigFromFlags("", "admin.conf")
-	if err != nil {
-		panic(err.Error())
+  if err != nil {
+    panic(err.Error())
   }
 
   //clientset for core stuff
   clientset, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		panic(err.Error())
+  if err != nil {
+    panic(err.Error())
   }
 
 
   fmt.Println("----list pods")
   pods, err := clientset.CoreV1().Pods("").List(metav1.ListOptions{})
   if err != nil {
-		panic(err.Error())
+    panic(err.Error())
   }
   for _, p := range pods.Items {
     fmt.Println(p.Name)
@@ -38,7 +38,7 @@ func main() {
   //client set for extension
   cs, err := muj.NewForConfig(config)
   if err != nil {
-		panic(err.Error())
+    panic(err.Error())
   }
   
   fmt.Println("----list extension objects")
@@ -46,7 +46,7 @@ func main() {
   zz := s.TestTypes("default")
   lst, err := zz.List(metav1.ListOptions{})
   if err != nil {
-		panic(err.Error())
+    panic(err.Error())
   }
 
   for _, item := range lst.Items {
@@ -59,7 +59,7 @@ func main() {
   //try to set watch for extensin list
   watch, err := zz.Watch(metav1.ListOptions{})
   if err != nil {
-		panic(err)
+    panic(err)
   }
   watch.Stop()
 
@@ -72,7 +72,7 @@ func main() {
   fmt.Println("----list using watcher")
   ls, err := lw.List(metav1.ListOptions{})
   if err != nil {
-		panic(err)
+    panic(err)
   }
   ls2 := ls.(*mj.TestTypeList)
   for _, item := range ls2.Items {
@@ -82,24 +82,19 @@ func main() {
   fmt.Println("----wait for notifications")
   //notifications through watcher
   _, controller := cache.NewInformer(
-		lw,	&mj.TestType{},	0,
-		cache.ResourceEventHandlerFuncs{
-			AddFunc: func(obj interface{}) {
-				fmt.Printf("added: %s \n", obj)
-			},
-			DeleteFunc: func(obj interface{}) {
-				fmt.Printf("deleted: %s \n", obj)
-			},
-			UpdateFunc: func(oldObj, newObj interface{}) {
-				fmt.Printf("changed \n")
-			},
-		},
+    lw,  &mj.TestType{}, 0,
+      cache.ResourceEventHandlerFuncs{
+        AddFunc: func(obj interface{}) {
+          fmt.Printf("added: %s \n", obj)
+        },
+        DeleteFunc: func(obj interface{}) {
+          fmt.Printf("deleted: %s \n", obj)
+        },
+        UpdateFunc: func(oldObj, newObj interface{}) {
+          fmt.Printf("changed \n")
+        },
+      },
   )
   stop := make(chan struct{})
   controller.Run(stop)
-  
-
-
-
-
 }
