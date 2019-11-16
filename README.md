@@ -25,3 +25,15 @@ go get k8s.io/client-go@v11.0.0
 go get k8s.io/api@kubernetes-1.14.0
 go get k8s.io/apimachinery@kubernetes-1.14.0 
 ```
+
+
+------- update:
+
+
+go get k8s.io/code-generator@kubernetes-1.16.0
+bash /Users/tom/go/pkg/mod/k8s.io/code-generator\@v0.0.0-20190912054826-cd179ad6a269/generate-groups.sh  all a.com/crdem/pkg/apis/generated a.com/crdem/pkg/apis "svc1:v1"   --output-base tmp
+
+
+cp -pvr tmp/a.com/crdem/* .
+
+

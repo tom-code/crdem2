@@ -6,9 +6,9 @@ import (
   "fmt"
   "k8s.io/client-go/tools/clientcmd"
   metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  muj "crdem/pkg/apis/generated/clientset/versioned"
+  muj "a.com/crdem/pkg/apis/generated/clientset/versioned"
   "k8s.io/client-go/tools/cache"
-  mj "crdem/pkg/apis/svc1/v1"
+  mj "a.com/crdem/pkg/apis/svc1/v1"
 )
 
 func main() {
